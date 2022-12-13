@@ -1,0 +1,15 @@
+{
+    "name": "hxv/aoc",
+    "autoload": {
+        "psr-4": {
+            "hxv\\AoC\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Michał Włodarczyk",
+            "email": "admin@hxv.me"
+        }
+    ],
+    "require": {}
+}

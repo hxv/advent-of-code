@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$day11Solution = new \hxv\AoC\Year2022\Day12\Solution();
+$day11Solution();
