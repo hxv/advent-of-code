@@ -11,5 +11,7 @@
             "email": "admin@hxv.me"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
 }
