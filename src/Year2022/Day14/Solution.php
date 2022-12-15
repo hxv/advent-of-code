@@ -3,27 +3,20 @@
 namespace hxv\AoC\Year2022\Day14;
 
 use hxv\AoC\Grid\BetterGrid;
-use hxv\AoC\Grid\BetterGridExporter;
 use hxv\AoC\Grid\BetterPoint;
 use hxv\AoC\Grid\Color;
 use hxv\AoC\Grid\Direction;
+use hxv\AoC\Grid\GridInterface;
+use hxv\AoC\Grid\PreviewGridDecorator;
 
 class Solution
 {
-    private const SAND_MOVEMENT_SLEEP = 0.0001 * 1_000_000;
-
-    private BetterGridExporter $gridExporter;
-
-    public function __construct()
-    {
-        $this->gridExporter = new BetterGridExporter();
-    }
-
     public function __invoke(): void
     {
-        $input = $this->getInput(__DIR__ . '/test-input');
+        $input = $this->getInput(__DIR__ . '/input');
 
         $grid = new BetterGrid();
+        $grid = new PreviewGridDecorator($grid, ['fps' => 7]);
 
         $opening = $grid->createPoint(500, -1); // I can't have duplicate points on the grid, so create opening one point up – results should be the same
         $opening->label = '+';
@@ -48,17 +41,13 @@ class Solution
 
         //* // part 2
         $boundaries = $grid->getBoundaries();
-        $startPoint = $grid->createPoint($boundaries['x']['min'] - 10, $boundaries['y']['max'] + 2);
+        $startPoint = $grid->createPoint($boundaries['x']['min'] - 250, $boundaries['y']['max'] + 2);
         $startPoint->label = '#';
-        $endPoint = $grid->createPoint($boundaries['x']['max'] + 10, $boundaries['y']['max'] + 2);
+        $endPoint = $grid->createPoint($boundaries['x']['max'] + 250, $boundaries['y']['max'] + 2);
         $endPoint->label = '#';
         $this->drawLine($grid, $startPoint, $endPoint);
         $voidY = $boundaries['y']['max'] + 3;
         //*/// / part 2
-
-//        usleep(self::SAND_MOVEMENT_SLEEP);
-//        echo $this->gridExporter->export($grid);
-//        die;
 
         $unitsOfSand = 0;
         while (true) {
@@ -69,9 +58,6 @@ class Solution
             $sand = $grid->createPoint($opening->x, $opening->y + 1);
             $sand->label = 'o';
             $sand->color = Color::Yellow;
-
-//            usleep(self::SAND_MOVEMENT_SLEEP);
-//            echo $this->gridExporter->export($grid);
 
             while (true) {
                 $moveDirections = null;
@@ -95,25 +81,15 @@ class Solution
 
                     break 2;
                 }
-
-//                usleep(self::SAND_MOVEMENT_SLEEP);
-//                echo $this->gridExporter->export($grid);
-            }
-
-//            usleep(self::SAND_MOVEMENT_SLEEP);
-            if ($unitsOfSand % 100 === 0) {
-                echo $this->gridExporter->export($grid);
             }
 
             ++$unitsOfSand;
         }
 
-        echo $this->gridExporter->export($grid);
-
         echo "{$unitsOfSand}\n";
     }
 
-    private function drawLine(BetterGrid $grid, BetterPoint $startPoint, BetterPoint $endPoint): void
+    private function drawLine(GridInterface $grid, BetterPoint $startPoint, BetterPoint $endPoint): void
     {
         if ($startPoint->x === $endPoint->x) {
             $startX = $endX = $startPoint->x;

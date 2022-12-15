@@ -4,7 +4,7 @@ namespace hxv\AoC\Grid;
 
 class BetterGridExporter
 {
-    public function export(BetterGrid $grid): string
+    public function export(GridInterface $grid): string
     {
         $ret = "\e[H\e[J";
 

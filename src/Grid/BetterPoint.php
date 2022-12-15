@@ -9,7 +9,7 @@ class BetterPoint
     public ?Color $color = null; // TODO – should this be here?
 
     public function __construct(
-        public readonly BetterGrid $grid,
+        public readonly GridInterface $grid,
         public readonly int $x,
         public readonly int $y,
     ) {
