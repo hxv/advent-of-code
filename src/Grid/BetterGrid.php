@@ -9,7 +9,7 @@ class BetterGrid
     /** @var array<int, array<int, BetterPoint>> */
     private array $points = [];
 
-    /** @var null|array{x: array{int, int}, y: array{int, int}} */
+    /** @var null|array{x: array{min: int, max: int}, y: array{min: int, max: int}} */
     private ?array $boundaries = null;
 
     public function createPoint(int $x, int $y): BetterPoint
@@ -30,11 +30,11 @@ class BetterGrid
 
         $this->points[$point->x][$point->y] = $point;
 
-        $this->boundaries ??= ['x' => [$point->x, $point->x], 'y' => [$point->y, $point->y]];
+        $this->boundaries ??= ['x' => ['min' => $point->x, 'max' => $point->x], 'y' => ['min' => $point->y, 'max' => $point->y]];
 
         $this->boundaries = [
-            'x' => [min($this->boundaries['x'][0], $point->x), max($this->boundaries['x'][1], $point->x)],
-            'y' => [min($this->boundaries['y'][0], $point->y), max($this->boundaries['y'][1], $point->y)],
+            'x' => ['min' => min($this->boundaries['x']['min'], $point->x), 'max' => max($this->boundaries['x']['max'], $point->x)],
+            'y' => ['min' => min($this->boundaries['y']['min'], $point->y), 'max' => max($this->boundaries['y']['max'], $point->y)],
         ];
 
         return $this;
@@ -59,6 +59,9 @@ class BetterGrid
         return $this->points[$x][$y] ?? null;
     }
 
+    /**
+     * @return array{x: array{min: int, max: int}, y: array{min: int, max: int}}
+     */
     public function getBoundaries(): array
     {
         return $this->boundaries ?? throw new LogicException("Can't get boundaries of empty grid.");

@@ -10,8 +10,8 @@ class BetterGridExporter
 
         $boundaries = $grid->getBoundaries();
 
-        for ($y=$boundaries['y'][0]; $y<=$boundaries['y'][1]; ++$y) {
-            for ($x=$boundaries['x'][0]; $x<=$boundaries['x'][1]; ++$x) {
+        for ($y=$boundaries['y']['min']; $y<=$boundaries['y']['max']; ++$y) {
+            for ($x=$boundaries['x']['min']; $x<=$boundaries['x']['max']; ++$x) {
                 if (null === $point = $grid->getPointAt($x, $y)) {
                     $ret .= ' ';
 

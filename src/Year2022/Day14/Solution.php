@@ -21,7 +21,7 @@ class Solution
 
     public function __invoke(): void
     {
-        $input = $this->getInput(__DIR__ . '/input');
+        $input = $this->getInput(__DIR__ . '/test-input');
 
         $grid = new BetterGrid();
 
@@ -43,17 +43,17 @@ class Solution
         }
 
         /* // part 1
-        $voidY = $grid->getBoundaries()['y'][1] + 1;
+        $voidY = $grid->getBoundaries()['y']['max'] + 1;
         //*/// / part 1
 
         //* // part 2
         $boundaries = $grid->getBoundaries();
-        $startPoint = $grid->createPoint($boundaries['x'][0] - 250, $boundaries['y'][1] + 2);
+        $startPoint = $grid->createPoint($boundaries['x']['min'] - 10, $boundaries['y']['max'] + 2);
         $startPoint->label = '#';
-        $endPoint = $grid->createPoint($boundaries['x'][1] + 250, $boundaries['y'][1] + 2);
+        $endPoint = $grid->createPoint($boundaries['x']['max'] + 10, $boundaries['y']['max'] + 2);
         $endPoint->label = '#';
         $this->drawLine($grid, $startPoint, $endPoint);
-        $voidY = $boundaries['y'][1] + 3;
+        $voidY = $boundaries['y']['max'] + 3;
         //*/// / part 2
 
 //        usleep(self::SAND_MOVEMENT_SLEEP);
