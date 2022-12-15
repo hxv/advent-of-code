@@ -10,7 +10,15 @@ class BetterGridExporter
 
         $boundaries = $grid->getBoundaries();
 
+        $leftPadLength = max(strlen($boundaries['y']['min']), strlen($boundaries['y']['max']));
+
         for ($y=$boundaries['y']['min']; $y<=$boundaries['y']['max']; ++$y) {
+            if (($y - $boundaries['y']['min']) % 2 === 0 || $y === $boundaries['y']['min'] || $y === $boundaries['y']['max']) {
+                $ret .= sprintf(" %{$leftPadLength}d ", $y);
+            } else {
+                $ret .= str_repeat(' ', $leftPadLength + 2);
+            }
+
             for ($x=$boundaries['x']['min']; $x<=$boundaries['x']['max']; ++$x) {
                 if (null === $point = $grid->getPointAt($x, $y)) {
                     $ret .= ' ';
@@ -22,6 +30,27 @@ class BetterGridExporter
             }
             $ret .= "\n";
         }
+
+        $downLegendLength = max(strlen($boundaries['x']['min']), strlen($boundaries['x']['max']));
+
+        $xs = range($boundaries['x']['min'], $boundaries['x']['max']);
+        for ($c=0; $c<$downLegendLength; ++$c) {
+            $ret .= str_repeat(' ', $leftPadLength + 2);
+
+            for ($i=0; $i<count($xs); ++$i) {
+                $x = $xs[$i];
+
+                if (($x - $boundaries['x']['min']) % 5 === 0 || $x === $boundaries['x']['min'] || $x === $boundaries['x']['max']) {
+                    $ret .= ((string) $xs[$i])[$c] ?? ' ';
+                } else {
+                    $ret .= ' ';
+                }
+            }
+
+            $ret .= "\n";
+        }
+
+        $ret .= "\n";
 
         return $ret;
     }
