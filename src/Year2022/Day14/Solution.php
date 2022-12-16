@@ -29,7 +29,7 @@ class Solution
                 $endPoint = $grid->getOrCreatePoint($line[$i][0], $line[$i][1]);
                 $endPoint->label = '#';
 
-                $this->drawLine($grid, $startPoint, $endPoint);
+                $grid->drawLine($startPoint, $endPoint, '#');
 
                 $startPoint = $endPoint;
             }
@@ -45,7 +45,7 @@ class Solution
         $startPoint->label = '#';
         $endPoint = $grid->createPoint($boundaries['x']['max'] + 250, $boundaries['y']['max'] + 2);
         $endPoint->label = '#';
-        $this->drawLine($grid, $startPoint, $endPoint);
+        $grid->drawLine($startPoint, $endPoint, '#');
         $voidY = $boundaries['y']['max'] + 3;
         //*/// / part 2
 
@@ -87,28 +87,6 @@ class Solution
         }
 
         echo "{$unitsOfSand}\n";
-    }
-
-    private function drawLine(GridInterface $grid, BetterPoint $startPoint, BetterPoint $endPoint): void
-    {
-        if ($startPoint->x === $endPoint->x) {
-            $startX = $endX = $startPoint->x;
-            $startY = min($startPoint->y, $endPoint->y) + 1;
-            $endY = max($startPoint->y, $endPoint->y) - 1;
-        } elseif ($startPoint->y === $endPoint->y) {
-            $startX = min($startPoint->x, $endPoint->x) + 1;
-            $endX = max($startPoint->x, $endPoint->x) - 1;
-            $startY = $endY = $startPoint->y;
-        } else {
-            throw new \RuntimeException(sprintf("Can't draw line from point %s to point %s.", $startPoint, $endPoint));
-        }
-
-        for ($x=$startX; $x<=$endX; ++$x) {
-            for ($y=$startY; $y<=$endY; ++$y) {
-                $point = $grid->getOrCreatePoint($x, $y);
-                $point->label = '#';
-            }
-        }
     }
 
     /**
