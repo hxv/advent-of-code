@@ -11,9 +11,14 @@ abstract class AbstractGrid implements GridInterface
         return new BetterPoint($this, $x, $y);
     }
 
-    public function getOrCreatePoint(int $x, int $y): BetterPoint
+    public function getOrCreatePoint(int $x, int $y, ?string $newPointLabel = null): BetterPoint
     {
-        return $this->getPointAt($x, $y) ?? $this->createPoint($x, $y);
+        if (null == $point = $this->getPointAt($x, $y)) {
+            $point = $this->createPoint($x, $y);
+            $point->label = $newPointLabel;
+        }
+
+        return $point;
     }
 
     public function drawLine(BetterPoint $startPoint, BetterPoint $endPoint, ?string $label = null): self

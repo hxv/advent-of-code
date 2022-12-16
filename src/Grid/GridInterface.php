@@ -6,7 +6,7 @@ interface GridInterface
 {
     public function createPoint(int $x, int $y): BetterPoint;
 
-    public function getOrCreatePoint(int $x, int $y): BetterPoint;
+    public function getOrCreatePoint(int $x, int $y, ?string $newPointLabel = null): BetterPoint;
 
     public function addPoint(BetterPoint $point): self;
 
