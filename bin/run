@@ -3,5 +3,5 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$day11Solution = new \hxv\AoC\Year2022\Day15\Solution();
+$day11Solution = new \hxv\AoC\Year2022\Day16\Solution();
 $day11Solution(true, true);
